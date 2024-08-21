@@ -1,0 +1,14 @@
+{
+  "name": "helloworlddevs/atdove-behat-auth-manager",
+  "description": "A custom authentication manager for Behat with Drupal",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "HelloWorldDevs\\AtdoveBehatAuthManager\\": "src/"
+    }
+  },
+  "require": {
+    "drupal/drupal-extension": "^4.0",
+    "behat/mink": "^1.8"
+  }
+}
