@@ -8,6 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 class ManagerExtension implements BehatExtension
 {
@@ -41,13 +43,8 @@ class ManagerExtension implements BehatExtension
 
   public function load(ContainerBuilder $container, array $config)
   {
-    $definition = new Definition('HelloWorldDevs\Behat\Manager\CustomDrupalAuthenticationManager');
-    $definition->addArgument(new Reference('mink'));
-    $definition->addArgument(new Reference('drupal.user_manager'));
-    $definition->addArgument(new Reference('drupal.driver_manager'));
-    $definition->addArgument('%mink.parameters%');
-    $definition->addArgument('%drupal.parameters%');
-    $container->setDefinition('drupal.authentication_manager', $definition);
+    $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+    $loader->load('services.yml');
   }
 
   /**

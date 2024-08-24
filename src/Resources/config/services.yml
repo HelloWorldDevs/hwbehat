@@ -9,3 +9,10 @@ services:
       - "%drupal.parameters%"
     tags:
       - { name: drupal.authentication_manager }
+  drupal.context.environment.reader:
+    class: Drupal\DrupalExtension\Context\Environment\Reader\Reader
+    arguments:
+      - "@drupal.drupal"
+      - "%drupal.parameters%"
+    tags:
+      - { name: environment.reader }
