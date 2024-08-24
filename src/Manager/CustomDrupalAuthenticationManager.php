@@ -1,6 +1,6 @@
 <?php
 
-namespace Your\CustomNamespace\Manager;
+namespace HelloWorldDevs\Behat\Manager;
 
 use Drupal\DrupalExtension\Manager\DrupalAuthenticationManager;
 
