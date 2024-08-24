@@ -2,23 +2,42 @@
 
 namespace HelloWorldDevs\Behat\Manager;
 
-use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
-use Behat\Testwork\ServiceContainer\ExtensionManager;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Behat\Testwork\ServiceContainer\Extension as BehatExtension;
+use Behat\Testwork\ServiceContainer\ExtensionManager as BehatExtensionManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class ManagerExtension implements ExtensionInterface
+class ManagerExtension implements BehatExtension
 {
+  /**
+   * {@inheritdoc}
+   */
   public function getConfigKey()
   {
-    return 'manager_extension';
+    return 'manager';
   }
 
-  public function initialize(ExtensionManager $extensionManager) {}
+  /**
+   * {@inheritdoc}
+   */
+  public function initialize(BehatExtensionManager $extensionManager)
+  {
+    // Initialization code here
+  }
 
-  public function configure(ArrayNodeDefinition $builder) {}
+  /**
+   * {@inheritdoc}
+   */
+  public function configure(ArrayNodeDefinition $builder)
+  {
+    // Configuration code here
+  }
+
+  /**
+   * {@inheritdoc}
+   */
 
   public function load(ContainerBuilder $container, array $config)
   {
@@ -31,5 +50,11 @@ class ManagerExtension implements ExtensionInterface
     $container->setDefinition('drupal.authentication_manager', $definition);
   }
 
-  public function process(ContainerBuilder $container) {}
+  /**
+   * {@inheritdoc}
+   */
+  public function process(ContainerBuilder $container)
+  {
+    // Processing services here
+  }
 }
