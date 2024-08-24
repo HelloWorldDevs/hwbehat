@@ -1,5 +1,5 @@
 {
-  "name": "helloworlddevs/atdove-behat-auth-manager",
+  "name": "helloworlddevs/chrome-behat-auth-manager",
   "description": "A custom authentication manager for Behat with Drupal",
   "type": "library",
   "autoload": {
