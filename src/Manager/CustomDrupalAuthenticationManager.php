@@ -12,6 +12,9 @@ class CustomDrupalAuthenticationManager extends DrupalAuthenticationManager
    */
   public function logIn(\stdClass $user)
   {
+    // Debug statement to verify this method is called
+    echo 'Custom logIn method called';
+
     // Ensure we aren't already logged in.
     $this->fastLogout();
 
