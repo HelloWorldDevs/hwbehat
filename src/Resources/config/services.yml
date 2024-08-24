@@ -1,6 +1,6 @@
 services:
   hwbehat.drupal.authentication_manager:
-    class: Drupal\DrupalExtension\Manager\DrupalAuthenticationManager
+    class: HelloWorldDevs\Behat\Manager\CustomDrupalAuthenticationManager
     arguments:
       - "@mink"
       - "@drupal.user_manager"
@@ -9,55 +9,3 @@ services:
       - "%drupal.parameters%"
     tags:
       - { name: drupal.authentication_manager }
-
-  drupal.user_manager:
-    class: Drupal\DrupalExtension\Manager\DrupalUserManager
-
-  drupal.drupal:
-    class: Drupal\DrupalDriverManager
-    arguments:
-      - "%drupal.drupal.api_driver%"
-
-  drupal.random:
-    class: Drupal\Component\Utility\Random
-
-  drupal.context.initializer:
-    class: Drupal\DrupalExtension\Context\Initializer\DrupalAwareInitializer
-    arguments:
-      - "@drupal.drupal"
-      - "%drupal.parameters%"
-      - "@hook.dispatcher"
-      - "@my_module.drupal.authentication_manager"
-      - "@drupal.user_manager"
-    tags:
-      - { name: context.initializer }
-
-  drupal.context.environment.reader:
-    class: Drupal\DrupalExtension\Context\Environment\Reader\Reader
-    arguments:
-      - "@drupal.drupal"
-      - "%drupal.parameters%"
-    tags:
-      - { name: environment.reader }
-
-  drupal.context.loader.annotated:
-    class: Drupal\DrupalExtension\Context\Annotation\Reader
-    arguments:
-    tags:
-      - { name: context.annotation_reader }
-
-  drupal.listener.driver:
-    class: Drupal\DrupalExtension\Listener\DriverListener
-    arguments:
-      - "@drupal.drupal"
-      - "%drupal.parameters%"
-    tags:
-      - { name: event_dispatcher.subscriber, priority: 0 }
-
-  drupal.region_selector:
-    class: Drupal\DrupalExtension\Selector\RegionSelector
-    arguments:
-      - "@mink.selector.css"
-      - "%drupal.region_map%"
-    tags:
-      - { name: mink.selector, alias: region }
