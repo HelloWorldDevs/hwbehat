@@ -1,38 +1,26 @@
 <?php
 
-namespace HelloWorldDevs\AtdoveBehatAuthManager\Manager;
+namespace Your\CustomNamespace\Manager;
 
-use Behat\Mink\Mink;
-use Drupal\Driver\AuthenticationDriverInterface;
-use Drupal\DrupalDriverManagerInterface;
+use Drupal\DrupalExtension\Manager\DrupalAuthenticationManager;
 
-class AtdoveBehatAuthenticationManager extends DrupalAuthenticationManager
+class CustomDrupalAuthenticationManager extends DrupalAuthenticationManager
 {
 
-  public function __construct(Mink $mink, DrupalUserManagerInterface $drupalUserManager, DrupalDriverManagerInterface $driverManager, array $minkParameters, array $drupalParameters)
-  {
-    $this->setMink($mink);
-    $this->userManager = $drupalUserManager;
-    $this->driverManager = $driverManager;
-    $this->setMinkParameters($minkParameters);
-    $this->setDrupalParameters($drupalParameters);
-  }
-
-  // Your custom logic, like clicking the "Email Login" button
+  /**
+   * {@inheritdoc}
+   */
   public function logIn(\stdClass $user)
   {
     // Ensure we aren't already logged in.
     $this->fastLogout();
 
     $this->getSession()->visit($this->locatePath($this->getDrupalText('login_url')));
+
+    // Wait for the page to fully load before interacting with it
+    $this->getSession()->wait(5000, 'document.readyState === "complete"');
+
     $element = $this->getSession()->getPage();
-
-    // Check if "Email Login" button is present and click it
-    $emailLoginButton = $element->findButton('Email Login');
-    if ($emailLoginButton) {
-      $emailLoginButton->click();
-    }
-
     $element->fillField($this->getDrupalText('username_field'), $user->name);
     $element->fillField($this->getDrupalText('password_field'), $user->pass);
     $submit = $element->findButton($this->getDrupalText('log_in'));
@@ -42,6 +30,9 @@ class AtdoveBehatAuthenticationManager extends DrupalAuthenticationManager
 
     // Log in.
     $submit->click();
+
+    // Wait for the page to fully load after clicking the submit button
+    $this->getSession()->wait(5000, 'document.readyState === "complete"');
 
     if (!$this->loggedIn()) {
       if (isset($user->role)) {
