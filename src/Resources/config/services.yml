@@ -1,18 +1,25 @@
+parameters:
+  # Drupal authentication manager.
+  drupal.authentication_manager.class: Drupal\DrupalExtension\Manager\DrupalUserManager
+
 services:
-  hwbehat.drupal.authentication_manager:
-    class: HelloWorldDevs\Behat\Manager\CustomDrupalAuthenticationManager
+  drupal.drupal:
+    class: Drupal\DrupalDriverManager
+    arguments:
+      - {}
+      - "@drupal.random"
+
+  drupal.user_manager:
+    class: Drupal\DrupalExtension\Manager\DrupalUserManager
+
+  drupal.random:
+    class: Drupal\Component\Utility\Random
+
+  drupal.authentication_manager:
+    class: "%drupal.authentication_manager.class%"
     arguments:
       - "@mink"
       - "@drupal.user_manager"
       - "@drupal.drupal"
       - "%mink.parameters%"
       - "%drupal.parameters%"
-    tags:
-      - { name: drupal.authentication_manager }
-  drupal.context.environment.reader:
-    class: Drupal\DrupalExtension\Context\Environment\Reader\Reader
-    arguments:
-      - "@drupal.drupal"
-      - "%drupal.parameters%"
-    tags:
-      - { name: environment.reader }
