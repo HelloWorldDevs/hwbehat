@@ -4,7 +4,7 @@ namespace HelloWorldDevs\Behat\Manager;
 
 use Drupal\DrupalExtension\Manager\DrupalAuthenticationManager;
 
-class CustomDrupalAuthenticationManager extends DrupalAuthenticationManager
+class CustomDrupalAuthenticationManager extends DrupalAuthenticationManagerInterface
 {
 
   /**
